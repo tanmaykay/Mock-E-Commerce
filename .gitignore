@@ -1,0 +1,35 @@
+# Dependency directories
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Database
+dev.db
+dev.db-journal
+prisma/migrations/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db

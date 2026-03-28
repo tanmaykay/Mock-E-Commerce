@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  password_hash String
+  role          String   @default("USER") // USER | ADMIN
+  created_at    DateTime @default(now())
+  orders        Order[]
+}
+
+model Product {
+  id             Int         @id @default(autoincrement())
+  name           String
+  description    String
+  price          Float
+  stock          Int
+  image_url      String?
+  category       String      @default("Hardware") // Hardware | Software | Firmware
+  average_rating Float       @default(0)
+  popularity     Int         @default(0)
+  created_at     DateTime    @default(now())
+  OrderItem      OrderItem[]
+  reviews        Review[]
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  product    Product  @relation(fields: [product_id], references: [id])
+  user_name  String
+  rating     Int      // 1-5
+  comment    String
+  created_at DateTime @default(now())
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  user_id     Int
+  user        User        @relation(fields: [user_id], references: [id])
+  total_price Float
+  status      String
+  created_at  DateTime    @default(now())
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id         Int     @id @default(autoincrement())
+  order_id   Int
+  order      Order   @relation(fields: [order_id], references: [id])
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id])
+  quantity   Int
+  price      Float
+}
